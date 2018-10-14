@@ -1,3 +1,6 @@
+:- include('prints.pl').
+
+% Initializes empty board
 create_board(Board) :- 
 	create_board_aux(19, [] , Board).
 
@@ -15,3 +18,7 @@ create_row_aux(N, L, Row) :-
 	N > 0, 
 	N1 is N-1, 
 	create_row_aux(N1, [freeCell|L], Row).
+
+test_print(Board):- 
+	create_board(Board),
+	print_board(Board).
