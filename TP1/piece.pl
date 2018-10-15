@@ -32,7 +32,35 @@ set_column(Ncolumn, Piece, [DPiece|Tail], [DPiece|NewTail]):-
 	set_column(Ncol, Piece, Tail, NewTail).
 
 %Remove Piece
-remove_piece(Ncolumn, Nrow, BoardIn, BoardOut):-
+remove_piece(Ncolumn, Nrow, RemovedPiece, BoardIn, BoardOut):-
+	get_piece(Ncolumn, Nrow, BoardIn, RemovedPiece),
 	set_piece(Ncolumn, Nrow, freeCell, BoardIn, BoardOut).
 
 %Move Piece
+
+move_piece(right, Ncolumn, Nrow, BoardIn, BoardOut):-
+	Ncolumn < 19,
+	Ncol is Ncolumn+1,
+	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
+	set_piece(Ncol, Nrow, Piece, BoardInt, BoardOut).
+
+move_piece(left, Ncolumn, Nrow, BoardIn, BoardOut):-
+	Ncolumn > 1,
+	Ncol is Ncolumn-1,
+	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
+	set_piece(Ncol, Nrow, Piece, BoardInt, BoardOut).
+
+move_piece(up, Ncolumn, Nrow, BoardIn, BoardOut):-
+	Nrow > 1,
+	Nr is Nrow-1,
+	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
+	set_piece(Ncolumn, Nr, Piece, BoardInt, BoardOut).
+
+move_piece(down, Ncolumn, Nrow, BoardIn, BoardOut):-
+	Nrow < 19,
+	Nr is Nrow+1,
+	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
+	set_piece(Ncolumn, Nr, Piece, BoardInt, BoardOut).
+
+move_piece(_,_,_,BoardIn,BoardIn):- 
+	write('Invalid Direction'), nl.

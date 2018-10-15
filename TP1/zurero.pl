@@ -1,5 +1,6 @@
 :- include('prints.pl').
 :- include('piece.pl').
+:- include('utility.pl').
 
 % Initializes empty board, with X piece on middle (10,10)
 create_board(PBoard) :- 
@@ -34,6 +35,4 @@ create_middle_row_aux(10, L, Row) :-
 
 test_print:- 
 	create_board(Board),
-	print_board(Board),
-	set_piece(19, 19, 'X', Board, NBoard),
-	print_board(NBoard).
+	print_board(Board).
