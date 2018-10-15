@@ -1,3 +1,4 @@
+% Get Piece
 get_piece(Ncolumn, Nrow, Board, Piece):-
 	get_row(Nrow, Board, Linha),
 	get_column(Ncolumn, Linha, Piece).
@@ -12,6 +13,7 @@ get_column(Ncolumn, [_|Tail], Piece):-
 	Ncol is Ncolumn-1,
 	get_column(Ncol, Tail, Piece).
 
+%Set Piece
 set_piece(Ncolumn, Nrow, Piece, BoardIn, BoardOut):-
     set_row(Nrow, Ncolumn, Piece, BoardIn, BoardOut).
 	
@@ -28,3 +30,9 @@ set_column(Ncolumn, Piece, [DPiece|Tail], [DPiece|NewTail]):-
 	Ncolumn>1,
 	Ncol is Ncolumn-1,
 	set_column(Ncol, Piece, Tail, NewTail).
+
+%
+remove_piece(Ncolumn, Nrow, BoardIn, BoardOut):-
+	set_piece(Ncolumn, Nrow, freeCell, BoardIn, BoardOut).
+
+
