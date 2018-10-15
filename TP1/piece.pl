@@ -31,8 +31,8 @@ set_column(Ncolumn, Piece, [DPiece|Tail], [DPiece|NewTail]):-
 	Ncol is Ncolumn-1,
 	set_column(Ncol, Piece, Tail, NewTail).
 
-%
+%Remove Piece
 remove_piece(Ncolumn, Nrow, BoardIn, BoardOut):-
 	set_piece(Ncolumn, Nrow, freeCell, BoardIn, BoardOut).
 
-
+%Move Piece

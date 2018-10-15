@@ -35,5 +35,5 @@ create_middle_row_aux(10, L, Row) :-
 test_print:- 
 	create_board(Board),
 	print_board(Board),
-	remove_piece(10,10,Board,NBoard),
+	set_piece(19, 19, 'X', Board, NBoard),
 	print_board(NBoard).
