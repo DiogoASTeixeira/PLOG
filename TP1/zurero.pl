@@ -1,6 +1,7 @@
 :- include('prints.pl').
 :- include('piece.pl').
 :- include('utility.pl').
+:- include('logic.pl').
 
 % Initializes empty board, with X piece on middle (10,10)
 create_board(PBoard) :- 
@@ -33,6 +34,10 @@ create_middle_row_aux(10, L, Row) :-
 	N1 is N-1, 
 	create_row_aux(N1, ['X'|L], Row).
 
-test_print:- 
+test_print(Valid):- 
 	create_board(Board),
-	print_board(Board).
+	print_board(Board),
+	set_piece(1,2,'X',  Board, NBoard),
+	check_valid_move(left, 2, NBoard, Valid),
+	print_board(NBoard).
+
