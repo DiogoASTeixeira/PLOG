@@ -15,3 +15,5 @@ play:-
 play_aux(Player, Board):-
 	player_piece(Player, Piece).
 
+
+
