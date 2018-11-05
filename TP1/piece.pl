@@ -37,6 +37,7 @@ remove_piece(Ncolumn, Nrow, RemovedPiece, BoardIn, BoardOut):-
 	set_piece(Ncolumn, Nrow, freeCell, BoardIn, BoardOut).
 
 %Move Piece
+%first cas, the piece can move, second case it cannot
 
 move_piece(right, Ncolumn, Nrow, BoardIn, BoardOut):-
 	Ncolumn < 19,
