@@ -37,31 +37,39 @@ remove_piece(Ncolumn, Nrow, RemovedPiece, BoardIn, BoardOut):-
 	set_piece(Ncolumn, Nrow, freeCell, BoardIn, BoardOut).
 
 %Move Piece
-%first cas, the piece can move, second case it cannot
+%first case, the piece can move, last case it cannot
 
 move_piece(right, Ncolumn, Nrow, BoardIn, BoardOut):-
 	Ncolumn < 19,
 	Ncol is Ncolumn+1,
+	get_piece(Ncol, Nrow, BoardIn, NextPiece),
+	NextPiece == freeCell,
 	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
 	set_piece(Ncol, Nrow, Piece, BoardInt, BoardOut).
 
 move_piece(left, Ncolumn, Nrow, BoardIn, BoardOut):-
 	Ncolumn > 1,
 	Ncol is Ncolumn-1,
+	get_piece(Ncol, Nrow, BoardIn, NextPiece),
+	NextPiece == freeCell,
 	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
 	set_piece(Ncol, Nrow, Piece, BoardInt, BoardOut).
 
 move_piece(up, Ncolumn, Nrow, BoardIn, BoardOut):-
 	Nrow > 1,
 	Nr is Nrow-1,
+	get_piece(Ncolumn, Nr, BoardIn, NextPiece),
+	NextPiece == freeCell,
 	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
 	set_piece(Ncolumn, Nr, Piece, BoardInt, BoardOut).
 
 move_piece(down, Ncolumn, Nrow, BoardIn, BoardOut):-
 	Nrow < 19,
 	Nr is Nrow+1,
+	get_piece(Ncolumn, Nr, BoardIn, NextPiece),
+	NextPiece == freeCell,
 	remove_piece(Ncolumn, Nrow, Piece, BoardIn, BoardInt),
 	set_piece(Ncolumn, Nr, Piece, BoardInt, BoardOut).
 
-move_piece(_,_,_,BoardIn,BoardIn):- 
-	write('Invalid Direction'), nl.
+%the last case, nothing moves
+move_piece(_,_,_,BoardIn,BoardIn).

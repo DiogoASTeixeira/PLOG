@@ -5,13 +5,17 @@
 :- include('board.pl').
 
 play:-
-	read(Word),
-	write(Word),
-	nl,
 	create_board(Board),
 	print_board(Board),
-	play_aux('Black',Board).
+	%set_piece(1,2,'X', Board, BoardM),
+	 set_piece(2,2,'X', Board, BoardJ),
+	%set_piece(2,4,'X', BoardG, BoardJ),^
 
-play_aux(Player, Board):-
-	player_piece(Player, Piece).
+	print_board(BoardJ),
+	throw_piece(right, 2, 'O', BoardJ, Board1),
+	print_board(Board1).
+	%play_aux('Black',Board).
+
+%play_aux(Player, Board):-
+%	player_piece(Player, Piece).
 
