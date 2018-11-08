@@ -7,13 +7,13 @@
 play:-
 	create_board(Board),
 	print_board(Board),
-	set_piece(11,10,'O', Board, Board1),
-	set_piece(12,10,'O', Board1, Board2),
-	set_piece(13,10,'O', Board2, Board3),
-	set_piece(15,10,'O', Board3, Board4),
-	set_piece(14,10,'O', Board4, Board5),
+	set_piece(10,10,'O', Board, Board1),
+	set_piece(11,11,'O', Board1, Board2),
+	set_piece(12,12,'O', Board2, Board3),
+	set_piece(13,13,'O', Board3, Board4),
+	set_piece(14,14,'O', Board4, Board5),
 
-	print_board(Board5),
+	print_board(Board5),!,
 	check_win(white, Board5).
 		%play_aux('Black',Board).
 

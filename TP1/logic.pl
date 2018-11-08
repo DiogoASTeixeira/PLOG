@@ -1,5 +1,5 @@
-change_player('White', 'Black').
-change_player('Black', 'White').
+change_player(white, black).
+change_player(black, white).
 
 player_piece(white, 'O').
 player_piece(black, 'X').

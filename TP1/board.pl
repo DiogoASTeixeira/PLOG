@@ -75,6 +75,8 @@ check_column(N, Piece, Nrow, Ncolumn, Board):-
 	Nr is Nrow + 1,
 	check_column(NN, Piece, Nr, Ncolumn, Board).
 
+check_diagonal(5, Piece, _, _, _):-
+	declare_winner(Piece).
 check_diagonal(N, Piece, Nrow, Ncolumn, Board):-
 	Nrow < 20,
 	Ncolumn < 20,
