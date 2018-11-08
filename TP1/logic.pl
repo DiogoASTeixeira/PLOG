@@ -1,8 +1,8 @@
 change_player('White', 'Black').
 change_player('Black', 'White').
 
-player_piece('White', 'O').
-player_piece('Black', 'X').
+player_piece(white, 'O').
+player_piece(black, 'X').
 
 %-------------- THROW Direction ---------------------
 throw_piece(right, Nrow, Piece, BoardIn, BoardOut):-
@@ -37,7 +37,7 @@ throw_piece(up, Ncolumn, Piece, BoardIn, BoardOut):-
 		(Piece2 == freeCell,
 			set_piece(Ncolumn, 18, Piece1, BoardIn, Board1),
 			set_piece(Ncolumn, 19, Piece, Board1, BoardOut))).
-		
+
 throw_piece(left, Nrow, Piece, BoardIn, BoardOut):-
 	Nrow > 0,
 	Nrow < 20,
@@ -67,7 +67,6 @@ throw_piece_right(N, Nrow, Piece, BoardIn, BoardOut):-
 	NN is N + 1,
 	throw_piece_right(NN, Nrow, Piece, BoardIn, BoardOut).
 
-%--------------------------------%
 throw_piece_left(N, Nrow, Piece, BoardIn, BoardOut):-
 	get_piece(N, Nrow, BoardIn, NPiece),
 	NPiece \= freeCell,

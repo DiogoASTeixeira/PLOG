@@ -23,3 +23,64 @@ create_row_aux(N, L, Row) :-
 	N > 0, 
 	N1 is N-1, 
 	create_row_aux(N1, [freeCell|L], Row).
+
+%----Verify Win---
+% Only verifies right, down and that diagonal, other directions come from previous calls
+
+declare_winner(Piece) :-
+	player_piece(Player, Piece),
+	write(Player),
+	write(' is the winner!'),!.
+
+check_win(Player, Board):-
+	player_piece(Player, Piece),
+	check_win_aux(Piece, 1,1, Board).
+
+check_win_aux(_, _, 20, _):-
+	write('No winners yet').
+check_win_aux(Piece, 20, Ncolumn, Board):-
+	Ncol is Ncolumn + 1,
+	check_win_aux(Piece, 1, Ncol, Board).
+check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	check_line(0, Piece, Nrow, Ncolumn, Board),!.
+check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	check_column(0, Piece, Nrow, Ncolumn, Board),!.
+check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	check_diagonal(0, Piece, Nrow, Ncolumn, Board),!.
+
+check_win_aux(Piece, 20, Ncolumn, Board):-
+	Ncol is Ncolumn + 1,
+	check_win_aux(Piece, 1, Ncol, Board).
+check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	Nr is Nrow + 1,
+	check_win_aux(Piece, Nr, Ncolumn, Board).
+
+check_line(5, Piece, _, _, _):-
+	declare_winner(Piece).
+check_line(N, Piece, Nrow, Ncolumn, Board):-
+	Ncolumn < 20,
+	get_piece(Ncolumn, Nrow, Board, NPiece),
+	Piece == NPiece,
+	NN is N+1,
+	Ncol is Ncolumn + 1,
+	check_line(NN, Piece, Nrow, Ncol, Board).
+
+check_column(5, Piece, _, _, _):-
+	declare_winner(Piece).
+check_column(N, Piece, Nrow, Ncolumn, Board):-
+	Nrow < 20,
+	get_piece(Ncolumn, Nrow, Board, NPiece),
+	Piece == NPiece,
+	NN is N+1,
+	Nr is Nrow + 1,
+	check_column(NN, Piece, Nr, Ncolumn, Board).
+
+check_diagonal(N, Piece, Nrow, Ncolumn, Board):-
+	Nrow < 20,
+	Ncolumn < 20,
+	get_piece(Ncolumn, Nrow, Board, NPiece),
+	Piece == NPiece,
+	NN is N + 1,
+	Nr is Nrow + 1,
+	Ncol is Ncolumn + 1,
+	check_diagonal(NN, Piece, Nr, Ncol, Board).

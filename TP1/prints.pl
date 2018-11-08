@@ -28,7 +28,7 @@ print_row_divider(N):-
 	print_row_divider_aux(N),
 	nl.
 
-print_row_divider_aux(0).
+print_row_divider_aux(0):-!.
 print_row_divider_aux(N):-
 	write('--'),
 	NN is N-1,

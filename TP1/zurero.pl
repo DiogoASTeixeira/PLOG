@@ -7,14 +7,15 @@
 play:-
 	create_board(Board),
 	print_board(Board),
-	%set_piece(1,2,'X', Board, BoardM),
-	 set_piece(2,19,'X', Board, BoardJ),
-	%set_piece(2,4,'X', BoardG, BoardJ),^
+	set_piece(11,10,'O', Board, Board1),
+	set_piece(12,10,'O', Board1, Board2),
+	set_piece(13,10,'O', Board2, Board3),
+	set_piece(15,10,'O', Board3, Board4),
+	set_piece(14,10,'O', Board4, Board5),
 
-	print_board(BoardJ),
-	throw_piece(down, 2, 'O', BoardJ, Board1),
-	print_board(Board1).
-	%play_aux('Black',Board).
+	print_board(Board5),
+	check_win(white, Board5).
+		%play_aux('Black',Board).
 
 %play_aux(Player, Board):-
 %	player_piece(Player, Piece).
