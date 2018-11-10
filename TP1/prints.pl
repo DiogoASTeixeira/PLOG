@@ -42,6 +42,7 @@ print_top_aux(19):-
 	write(19).
 
 print_top_aux(Counter):-
+	Counter < 19,
 	Counter > 9,
 	write(' '),
 	write(Counter),
@@ -49,6 +50,8 @@ print_top_aux(Counter):-
 	print_top_aux(C).
 
 print_top_aux(Counter):-
+	Counter > 0,
+	Counter < 19,
 	write(' '),
 	write(Counter),
 	write(' '),

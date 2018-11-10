@@ -34,11 +34,11 @@ declare_winner(Piece) :-
 
 check_win(Player, Board):-
 	player_piece(Player, Piece),
-	write(Piece),!,
+	!,
 	check_win_aux(Piece, 1,1, Board).
 
 check_win_aux(_, _, 20, _):-
-	write('No winners yet'),nl, fail.
+	nl, fail.
 check_win_aux(Piece, 20, Ncolumn, Board):-
 	Ncolumn < 20,
 	Ncol is Ncolumn + 1,
