@@ -42,8 +42,7 @@ loop(Player, Board):-
 			;	change_player(Player, Opponent),
 				loop(Opponent, NewBoard))
 		%ELSE throw_piece - Impossible move
-		;	write('THROW'),
-			loop(Player, Board))
+		;	loop(Player, Board))
 	%ELSE of input_direction - Invalid Direction
 	;		write('Input'),
 	loop(Player, Board)).
