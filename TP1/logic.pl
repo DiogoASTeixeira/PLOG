@@ -50,7 +50,7 @@ throw_piece(left, Nrow, Piece, BoardIn, BoardOut):-
 			set_piece(19, Nrow, Piece, Board1, BoardOut))).
 
 throw_piece(_, _, _, BoardIn, BoardIn):-
-	write('Invalid move!'),nl,!.
+	write('Invalid move!'),nl,!,fail.
 %---------END THROW Direction-----------%
 
 throw_piece_right(N, Nrow, Piece, BoardIn, BoardOut):-

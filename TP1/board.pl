@@ -30,28 +30,31 @@ create_row_aux(N, L, Row) :-
 declare_winner(Piece) :-
 	player_piece(Player, Piece),
 	write(Player),
-	write(' is the winner!'),!.
+	write(' is the winner!'),nl,!.
 
 check_win(Player, Board):-
 	player_piece(Player, Piece),
+	write(Piece),!,
 	check_win_aux(Piece, 1,1, Board).
 
 check_win_aux(_, _, 20, _):-
-	write('No winners yet').
+	write('No winners yet'),nl, fail.
 check_win_aux(Piece, 20, Ncolumn, Board):-
+	Ncolumn < 20,
 	Ncol is Ncolumn + 1,
 	check_win_aux(Piece, 1, Ncol, Board).
 check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	Ncolumn < 20,
 	check_line(0, Piece, Nrow, Ncolumn, Board),!.
 check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	Ncolumn < 20,
 	check_column(0, Piece, Nrow, Ncolumn, Board),!.
 check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	Ncolumn < 20,
 	check_diagonal(0, Piece, Nrow, Ncolumn, Board),!.
-
-check_win_aux(Piece, 20, Ncolumn, Board):-
-	Ncol is Ncolumn + 1,
-	check_win_aux(Piece, 1, Ncol, Board).
 check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	Ncolumn < 20,
+	Nrow < 20,
 	Nr is Nrow + 1,
 	check_win_aux(Piece, Nr, Ncolumn, Board).
 
@@ -59,7 +62,7 @@ check_line(5, Piece, _, _, _):-
 	declare_winner(Piece).
 check_line(N, Piece, Nrow, Ncolumn, Board):-
 	Ncolumn < 20,
-	get_piece(Ncolumn, Nrow, Board, NPiece),
+	get_piece(Ncolumn, Nrow, Board, NPiece),!,
 	Piece == NPiece,
 	NN is N+1,
 	Ncol is Ncolumn + 1,
@@ -69,7 +72,7 @@ check_column(5, Piece, _, _, _):-
 	declare_winner(Piece).
 check_column(N, Piece, Nrow, Ncolumn, Board):-
 	Nrow < 20,
-	get_piece(Ncolumn, Nrow, Board, NPiece),
+	get_piece(Ncolumn, Nrow, Board, NPiece),!,
 	Piece == NPiece,
 	NN is N+1,
 	Nr is Nrow + 1,
@@ -80,7 +83,7 @@ check_diagonal(5, Piece, _, _, _):-
 check_diagonal(N, Piece, Nrow, Ncolumn, Board):-
 	Nrow < 20,
 	Ncolumn < 20,
-	get_piece(Ncolumn, Nrow, Board, NPiece),
+	get_piece(Ncolumn, Nrow, Board, NPiece),!,
 	Piece == NPiece,
 	NN is N + 1,
 	Nr is Nrow + 1,
