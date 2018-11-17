@@ -54,6 +54,9 @@ check_win_aux(Piece, Nrow, Ncolumn, Board):-
 	check_diagonal(0, Piece, Nrow, Ncolumn, Board),!.
 check_win_aux(Piece, Nrow, Ncolumn, Board):-
 	Ncolumn < 20,
+	check_diagonal_rev(0, Piece, Nrow, Ncolumn, Board),!.
+check_win_aux(Piece, Nrow, Ncolumn, Board):-
+	Ncolumn < 20,
 	Nrow < 20,
 	Nr is Nrow + 1,
 	check_win_aux(Piece, Nr, Ncolumn, Board).
@@ -89,3 +92,15 @@ check_diagonal(N, Piece, Nrow, Ncolumn, Board):-
 	Nr is Nrow + 1,
 	Ncol is Ncolumn + 1,
 	check_diagonal(NN, Piece, Nr, Ncol, Board).
+
+check_diagonal_rev(5, Piece, _, _, _):-
+	declare_winner(Piece).
+check_diagonal_rev(N, Piece, Nrow, Ncolumn, Board):-
+	Nrow < 20,
+	Ncolumn > 0,
+	get_piece(Ncolumn, Nrow, Board, NPiece),!,
+	Piece == NPiece,
+	NN is N + 1,
+	Nr is Nrow + 1,
+	Ncol is Ncolumn - 1,
+	check_diagonal_rev(NN, Piece, Nr, Ncol, Board).
