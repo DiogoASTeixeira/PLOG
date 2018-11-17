@@ -80,7 +80,7 @@ first_piece_in_row(Board, Row, Piece, Column):-
 first_piece_in_row_aux(N, Board, Row, Piece, N):-
 	N < 20,
 	get_piece(N, Row, Board, Piece),
-	Piece \= freeCell.
+	Piece \= freeCell,!.
 first_piece_in_row_aux(N, Board, Row, Piece, Column):-
 	N < 20,
 	NN is N+1,
@@ -91,7 +91,7 @@ last_piece_in_row(Board, Row, Piece, Column):-
 last_piece_in_row_aux(N, Board, Row, Piece, N):-
 	N > 0,
 	get_piece(N, Row, Board, Piece),
-	Piece \= freeCell.
+	Piece \= freeCell,!.
 last_piece_in_row_aux(N, Board, Row, Piece, Column):-
 	N > 0,
 	NN is N - 1,
@@ -102,7 +102,7 @@ first_piece_in_column(Board, Column, Piece, Row):-
 first_piece_in_column_aux(N, Board, Column, Piece, N):-
 	N < 20,
 	get_piece(Column, N, Board, Piece),
-	Piece \= freeCell.
+	Piece \= freeCell,!.
 first_piece_in_column_aux(N, Board, Column, Piece, Row):-
 	N < 20,
 	NN is N + 1,
@@ -113,7 +113,7 @@ last_piece_in_column(Board, Column, Piece, Row):-
 last_piece_in_column_aux(N, Board, Column, Piece, N):-
 	N > 0,
 	get_piece(Column, N, Board, Piece),
-	Piece \= freeCell.
+	Piece \= freeCell,!.
 last_piece_in_column_aux(N, Board, Column, Piece, Row):-
 	N > 0,
 	NN is N - 1,

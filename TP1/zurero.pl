@@ -25,24 +25,22 @@ process_direction('down', down):-
 process_direction(_, invalid):-
 	write('Invalid direction'),nl, fail.
 
-add_pieces(Board, NewBoard) :-
-	set_piece(10,10,'O', Board, Board1),
-	set_piece(10,11,'O', Board1, Board2),
-	set_piece(10,12,'O', Board2, Board3),
-	set_piece(10,13,'O', Board3, NewBoard).
-	% set_piece(10,14,'O', Board4, NewBoard).
-
 game(1):-
 	create_board(Board),!,
-	%add_pieces(Board, NBoard), %Function for testing purposes
 	(loopPvP(white, Board) ->
 	!, write('The Game is Over');
 	!,write('Game Over')),nl.
 
 game(2):-
 	create_board(Board),!,
-	% add_pieces(Board, NBoard), %Function for testing purposes
-	(loopAI(white, Board) ->
+	write('AI Difficulty:'),nl,
+	write('1- Smart as a brick'),nl,
+	write('2- Smart as a slightly intelligent brick'),nl,
+	write('3- Actually tries to play'),nl,
+	write('Select option: '),
+	read(AIdifficulty),
+
+	(loopAI(AIdifficulty, white, Board) ->
 	!, write('The Game is Over');
 	!,write('Game Over')),nl.
 
@@ -65,18 +63,18 @@ loopPvP(Player, Board):-
 	%ELSE of input_direction - Invalid Direction
 	;	loopPvP(Player, Board)).
 
-loopAI(Player, Board):-
+loopAI(AIdifficulty, Player, Board):-
 	!,
 	print_board(Board),
-	normal_mode('O', Board, Direction, Line),
+	ai_decision(AIdifficulty, 'O', Board, Direction, Line),
 	throw_piece(Direction, Line, 'O', Board, NewBoard) ->
 	(victory_check(white, NewBoard) ->
 		!,true
 	;
 		change_player(Player, Opponent),
-		loopPvAI(Opponent, NewBoard)).
+		loopPvAI(AIdifficulty, Opponent, NewBoard)).
 
-loopPvAI(Player, Board):-
+loopPvAI(AIdifficulty, Player, Board):-
 	!,
 	print_board(Board),
 	write(Player),
@@ -87,13 +85,13 @@ loopPvAI(Player, Board):-
 			(victory_check(Player, NewBoard) ->
 				!,true
 			;	change_player(Player, Opponent),
-				loopAI(Opponent, NewBoard))
+				loopAI(AIdifficulty, Opponent, NewBoard))
 		%ELSE throw_piece - Impossible move
 		;	write('Invalid move!'),
 			nl,
-			loopPvAI(Player, Board))
+			loopPvAI(AIdifficulty, Player, Board))
 	%ELSE of input_direction - Invalid Direction
-	;	loopPvAI(Player, Board)).
+	;	loopPvAI(AIdifficulty, Player, Board)).
 
 victory_check(Player, Board):-
 	check_win(Player, Board),
