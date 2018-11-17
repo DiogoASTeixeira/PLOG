@@ -10,6 +10,7 @@ zurero:-
 	write('Zurero'),nl,
 	write('1- Player vs Player'),nl,
 	write('2- Player vs AI'),nl,
+	write('3- AI vs AI'),nl,
 	write('Select option: '),
 	read(Option),
 	game(Option).
@@ -44,6 +45,12 @@ game(2):-
 	!, write('The Game is Over');
 	!,write('Game Over')),nl.
 
+game(3):-
+	create_board(Board),
+	(loopAIvAI1(white, Board) ->
+	!, write('The Game is Over');
+	write('Game Over')),nl.
+
 loopPvP(Player, Board):-
 	!,
 	print_board(Board),
@@ -66,9 +73,10 @@ loopPvP(Player, Board):-
 loopAI(AIdifficulty, Player, Board):-
 	!,
 	print_board(Board),
-	ai_decision(AIdifficulty, 'O', Board, Direction, Line),
-	throw_piece(Direction, Line, 'O', Board, NewBoard) ->
-	(victory_check(white, NewBoard) ->
+	player_piece(Player, Piece),
+	ai_decision(AIdifficulty, Piece, Board, Direction, Line),
+	throw_piece(Direction, Line, Piece, Board, NewBoard) ->
+	(victory_check(Player, NewBoard) ->
 		!,true
 	;
 		change_player(Player, Opponent),
@@ -92,6 +100,32 @@ loopPvAI(AIdifficulty, Player, Board):-
 			loopPvAI(AIdifficulty, Player, Board))
 	%ELSE of input_direction - Invalid Direction
 	;	loopPvAI(AIdifficulty, Player, Board)).
+
+
+loopAIvAI1(Player, Board):-
+	!,
+	print_board(Board),
+	player_piece(Player, Piece),
+	ai_decision(2, Piece, Board, Direction, Line),
+	throw_piece(Direction, Line, Piece, Board, NewBoard) ->
+	(victory_check(Player, NewBoard) ->
+		!,true
+	;
+		change_player(Player, Opponent),
+		loopAIvAI2(Opponent, NewBoard)).
+
+loopAIvAI2(Player, Board):-
+	!,
+	print_board(Board),
+	player_piece(Player, Piece),
+	ai_decision(1, Piece, Board, Direction, Line),
+	throw_piece(Direction, Line, Piece, Board, NewBoard) ->
+	(victory_check(Player, NewBoard) ->
+		!,true
+	;
+		change_player(Player, Opponent),
+		loopAIvAI1(Opponent, NewBoard)).
+
 
 victory_check(Player, Board):-
 	check_win(Player, Board),
