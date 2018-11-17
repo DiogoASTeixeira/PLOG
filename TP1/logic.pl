@@ -4,6 +4,9 @@ change_player(black, white).
 player_piece(white, 'O').
 player_piece(black, 'X').
 
+change_piece('O', 'X').
+change_piece('X', 'O').
+
 %-------------- THROW Direction ---------------------
 throw_piece(right, Nrow, Piece, BoardIn, BoardOut):-
 	Nrow > 0,
@@ -50,7 +53,7 @@ throw_piece(left, Nrow, Piece, BoardIn, BoardOut):-
 			set_piece(19, Nrow, Piece, Board1, BoardOut))).
 
 throw_piece(_, _, _, BoardIn, BoardIn):-
-	write('Invalid move!'),nl,!,fail.
+	!,fail.
 %---------END THROW Direction-----------%
 
 throw_piece_right(N, Nrow, Piece, BoardIn, BoardOut):-

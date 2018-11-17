@@ -73,3 +73,48 @@ move_piece(down, Ncolumn, Nrow, BoardIn, BoardOut):-
 
 %the last case, nothing moves
 move_piece(_,_,_,BoardIn,BoardIn).
+
+
+first_piece_in_row(Board, Row, Piece, Column):-
+	first_piece_in_row_aux(1, Board, Row, Piece, Column).
+first_piece_in_row_aux(N, Board, Row, Piece, N):-
+	N < 20,
+	get_piece(N, Row, Board, Piece),
+	Piece \= freeCell.
+first_piece_in_row_aux(N, Board, Row, Piece, Column):-
+	N < 20,
+	NN is N+1,
+	first_piece_in_row_aux(NN, Board, Row, Piece, Column).
+
+last_piece_in_row(Board, Row, Piece, Column):-
+	last_piece_in_row_aux(19, Board, Row, Piece, Column).
+last_piece_in_row_aux(N, Board, Row, Piece, N):-
+	N > 0,
+	get_piece(N, Row, Board, Piece),
+	Piece \= freeCell.
+last_piece_in_row_aux(N, Board, Row, Piece, Column):-
+	N > 0,
+	NN is N - 1,
+	last_piece_in_row_aux(NN, Board, Row, Piece, Column).
+
+first_piece_in_column(Board, Column, Piece, Row):-
+	first_piece_in_column_aux(1, Board, Column, Piece, Row).
+first_piece_in_column_aux(N, Board, Column, Piece, N):-
+	N < 20,
+	get_piece(Column, N, Board, Piece),
+	Piece \= freeCell.
+first_piece_in_column_aux(N, Board, Column, Piece, Row):-
+	N < 20,
+	NN is N + 1,
+	first_piece_in_column_aux(NN, Board, Column, Piece, Row).
+ 
+last_piece_in_column(Board, Column, Piece, Row):-
+	last_piece_in_column_aux(19, Board, Column, Piece, Row).
+last_piece_in_column_aux(N, Board, Column, Piece, N):-
+	N > 0,
+	get_piece(Column, N, Board, Piece),
+	Piece \= freeCell.
+last_piece_in_column_aux(N, Board, Column, Piece, Row):-
+	N > 0,
+	NN is N - 1,
+	last_piece_in_column_aux(NN, Board, Column, Piece, Row).

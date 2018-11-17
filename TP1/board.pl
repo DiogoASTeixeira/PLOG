@@ -38,7 +38,7 @@ check_win(Player, Board):-
 	check_win_aux(Piece, 1,1, Board).
 
 check_win_aux(_, _, 20, _):-
-	nl, fail.
+	fail.
 check_win_aux(Piece, 20, Ncolumn, Board):-
 	Ncolumn < 20,
 	Ncol is Ncolumn + 1,

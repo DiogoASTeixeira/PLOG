@@ -41,8 +41,8 @@ game(1):-
 
 game(2):-
 	create_board(Board),!,
-	add_pieces(Board, NBoard), %Function for testing purposes
-	(loopAI(white, NBoard) ->
+	% add_pieces(Board, NBoard), %Function for testing purposes
+	(loopAI(white, Board) ->
 	!, write('The Game is Over');
 	!,write('Game Over')),nl.
 
@@ -59,15 +59,16 @@ loopPvP(Player, Board):-
 			;	change_player(Player, Opponent),
 				loopPvP(Opponent, NewBoard))
 		%ELSE throw_piece - Impossible move
-		;	loopPvP(Player, Board))
+		;	write('Invalid move!'),
+			nl,
+			loopPvP(Player, Board))
 	%ELSE of input_direction - Invalid Direction
-	;		write('Input'),
-	loopPvP(Player, Board)).
+	;	loopPvP(Player, Board)).
 
 loopAI(Player, Board):-
 	!,
 	print_board(Board),
-	easy_mode('O', Board, Direction, Line),
+	normal_mode('O', Board, Direction, Line),
 	throw_piece(Direction, Line, 'O', Board, NewBoard) ->
 	(victory_check(white, NewBoard) ->
 		!,true
@@ -88,10 +89,11 @@ loopPvAI(Player, Board):-
 			;	change_player(Player, Opponent),
 				loopAI(Opponent, NewBoard))
 		%ELSE throw_piece - Impossible move
-		;	loopPvAI(Player, Board))
+		;	write('Invalid move!'),
+			nl,
+			loopPvAI(Player, Board))
 	%ELSE of input_direction - Invalid Direction
-	;		write('Input'),
-	loopPvAI(Player, Board)).
+	;	loopPvAI(Player, Board)).
 
 victory_check(Player, Board):-
 	check_win(Player, Board),
