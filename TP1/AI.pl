@@ -9,6 +9,11 @@ ai_decision(2, Piece, Board, Direction, NWin):-
 	valid_moves(Board, HList, VList, Piece),
 	try_win(Board, HList, VList, Piece, NWin, Direction).
 
+%------- NORMAL MODE ------------
+ai_decision(3, Piece, Board, Direction, NWin):-
+	valid_moves(Board, HList, VList, Piece),
+	try_win_normal(Board, HList, VList, Piece, NWin, Direction).
+
 try_win(Board, HList, VList, Piece, NWin, Direction):- %If there is a winning play, the bot will perform it
 	get_winning_play(Board, HList, VList, Piece, NWin, Direction).
 
@@ -55,12 +60,6 @@ get_winning_vert(Board, [X|Tail], Piece, NWin, Direction):-
 	X =< Tail,
 	Xn is X + 1,
 	get_winning_hor(Board, [Xn|Tail], Piece, NWin, Direction).
-
-
-%------- NORMAL MODE ------------
-ai_decision(3, Piece, Board, Direction, NWin):-
-	valid_moves(Board, HList, VList, Piece),
-	try_win_normal(Board, HList, VList, Piece, NWin, Direction).
 
 try_win_normal(Board, HList, VList, Piece, NWin, Direction):- %If there is a winning play, the bot will perform it
 	get_winning_play(Board, HList, VList, Piece, NWin, Direction).
@@ -140,27 +139,27 @@ valid_moves(Board, HList, VList, Piece):-
 	valid_vert(Board, VList, 1, Piece).
 
 valid_hor(Board, [N|HList], N, Piece):-
-	throw_piece(right, N, Piece, Board, BoardOut),
+	throw_piece(right, N, Piece, Board, _),
 	valid_hor_last(Board, HList, 19, Piece).
 valid_hor(Board, HList, N, Piece):-
 	NN is N+1,
 	valid_hor(Board, HList, NN, Piece).
 
 valid_hor_last(Board, [N|[]], N, Piece):-
-	throw_piece(right, N, Piece, Board, BoardOut).
+	throw_piece(right, N, Piece, Board, _).
 valid_hor_last(Board, HList, N, Piece):-
 	NN is N-1,
 	valid_hor_last(Board, HList, NN, Piece).
 
 valid_vert(Board, [N|VList], N, Piece):-
-	throw_piece(up, N, Piece, Board, BoardOut),
+	throw_piece(up, N, Piece, Board, _),
 	valid_vert_last(Board, VList, 19, Piece).
 valid_vert(Board, VList, N, Piece):-
 	NN is N+1,
 	valid_vert(Board, VList, NN, Piece).
 
 valid_vert_last(Board, [N|[]], N, Piece):-
-	throw_piece(up, N, Piece, Board, BoardOut).
+	throw_piece(up, N, Piece, Board, _).
 valid_vert_last(Board, VList, N, Piece):-
 	NN is N-1,
 	valid_vert_last(Board, VList, NN, Piece).
