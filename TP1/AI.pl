@@ -1,16 +1,16 @@
 %-----------CALHAU MODE ------------ Pretty sure it doesn't know how to play
-ai_decision(1,Piece, Board, Direction, NWin):-
+choose_move(1,Piece, Board, Direction, NWin):-
 	valid_moves(Board, HList, VList, Piece),
 	my_random(1,2,Rand),
 	use_list(Rand, HList, VList, Direction, NWin).
 
 %-------- EASY MODE ---------
-ai_decision(2, Piece, Board, Direction, NWin):-
+choose_move(2, Piece, Board, Direction, NWin):-
 	valid_moves(Board, HList, VList, Piece),
 	try_win(Board, HList, VList, Piece, NWin, Direction).
 
 %------- NORMAL MODE ------------
-ai_decision(3, Piece, Board, Direction, NWin):-
+choose_move(3, Piece, Board, Direction, NWin):-
 	valid_moves(Board, HList, VList, Piece),
 	try_win_normal(Board, HList, VList, Piece, NWin, Direction).
 

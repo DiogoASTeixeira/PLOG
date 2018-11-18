@@ -58,12 +58,12 @@ loopPvP(Player, Board):-
 	(input_direction(Direction)->
 		input_number(Input2),
 		player_piece(Player, Piece),
-		(throw_piece(Direction, Input2, Piece, Board, NewBoard) ->
-			(victory_check(Player, NewBoard) ->
+		(move(Direction, Input2, Piece, Board, NewBoard) ->
+			(game_over(Player, NewBoard) ->
 				!,true
 			;	change_player(Player, Opponent),
 				loopPvP(Opponent, NewBoard))
-		%ELSE throw_piece - Impossible move
+		%ELSE move - Impossible move
 		;	write('Invalid move!'),
 			nl,
 			loopPvP(Player, Board))
@@ -74,9 +74,9 @@ loopAI(AIdifficulty, Player, Board):-
 	!,
 	print_board(Board),
 	player_piece(Player, Piece),
-	ai_decision(AIdifficulty, Piece, Board, Direction, Line),
-	throw_piece(Direction, Line, Piece, Board, NewBoard) ->
-	(victory_check(Player, NewBoard) ->
+	choose_move(AIdifficulty, Piece, Board, Direction, Line),
+	move(Direction, Line, Piece, Board, NewBoard) ->
+	(game_over(Player, NewBoard) ->
 		!,true
 	;
 		change_player(Player, Opponent),
@@ -89,12 +89,12 @@ loopPvAI(AIdifficulty, Player, Board):-
 	(input_direction(Direction)->
 		input_number(Input2),
 		player_piece(Player, Piece),
-		(throw_piece(Direction, Input2, Piece, Board, NewBoard) ->
-			(victory_check(Player, NewBoard) ->
+		(move(Direction, Input2, Piece, Board, NewBoard) ->
+			(game_over(Player, NewBoard) ->
 				!,true
 			;	change_player(Player, Opponent),
 				loopAI(AIdifficulty, Opponent, NewBoard))
-		%ELSE throw_piece - Impossible move
+		%ELSE move - Impossible move
 		;	write('Invalid move!'),
 			nl,
 			loopPvAI(AIdifficulty, Player, Board))
@@ -106,9 +106,9 @@ loopAIvAI1(Player, Board):-
 	!,
 	print_board(Board),
 	player_piece(Player, Piece),
-	ai_decision(2, Piece, Board, Direction, Line),
-	throw_piece(Direction, Line, Piece, Board, NewBoard) ->
-	(victory_check(Player, NewBoard) ->
+	choose_move(2, Piece, Board, Direction, Line),
+	move(Direction, Line, Piece, Board, NewBoard) ->
+	(game_over(Player, NewBoard) ->
 		!,true
 	;
 		change_player(Player, Opponent),
@@ -118,20 +118,20 @@ loopAIvAI2(Player, Board):-
 	!,
 	print_board(Board),
 	player_piece(Player, Piece),
-	ai_decision(1, Piece, Board, Direction, Line),
-	throw_piece(Direction, Line, Piece, Board, NewBoard) ->
-	(victory_check(Player, NewBoard) ->
+	choose_move(1, Piece, Board, Direction, Line),
+	move(Direction, Line, Piece, Board, NewBoard) ->
+	(game_over(Player, NewBoard) ->
 		!,true
 	;
 		change_player(Player, Opponent),
 		loopAIvAI1(Opponent, NewBoard)).
 
 
-victory_check(Player, Board):-
+game_over(Player, Board):-
 	check_win(Player, Board),
 	!,
 	print_board(Board).
-victory_check(Player, Board):-
+game_over(Player, Board):-
 	change_player(Player, Opponent),
 	check_win(Opponent, Board),
 	!,

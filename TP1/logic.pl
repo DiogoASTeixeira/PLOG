@@ -8,7 +8,7 @@ change_piece('O', 'X').
 change_piece('X', 'O').
 
 %-------------- THROW Direction ---------------------
-throw_piece(right, Nrow, Piece, BoardIn, BoardOut):-
+move(right, Nrow, Piece, BoardIn, BoardOut):-
 	Nrow > 0,
 	Nrow < 20,
 	get_piece(1, Nrow, BoardIn, Piece1),
@@ -19,7 +19,7 @@ throw_piece(right, Nrow, Piece, BoardIn, BoardOut):-
 				set_piece(2, Nrow, Piece1, BoardIn, Board1),
 				set_piece(1, Nrow, Piece, Board1, BoardOut))).
 
-throw_piece(down, Ncolumn, Piece, BoardIn, BoardOut):-
+move(down, Ncolumn, Piece, BoardIn, BoardOut):-
 	Ncolumn > 0,
 	Ncolumn < 20,
 	get_piece(Ncolumn, 1, BoardIn, Piece1),
@@ -30,7 +30,7 @@ throw_piece(down, Ncolumn, Piece, BoardIn, BoardOut):-
 			set_piece(Ncolumn, 2, Piece1, BoardIn, Board1),
 			set_piece(Ncolumn, 1, Piece, Board1, BoardOut))).
 
-throw_piece(up, Ncolumn, Piece, BoardIn, BoardOut):-
+move(up, Ncolumn, Piece, BoardIn, BoardOut):-
 	Ncolumn > 0,
 	Ncolumn < 20,
 	get_piece(Ncolumn, 19, BoardIn, Piece1),
@@ -41,7 +41,7 @@ throw_piece(up, Ncolumn, Piece, BoardIn, BoardOut):-
 			set_piece(Ncolumn, 18, Piece1, BoardIn, Board1),
 			set_piece(Ncolumn, 19, Piece, Board1, BoardOut))).
 
-throw_piece(left, Nrow, Piece, BoardIn, BoardOut):-
+move(left, Nrow, Piece, BoardIn, BoardOut):-
 	Nrow > 0,
 	Nrow < 20,
 	get_piece(19, Nrow, BoardIn, Piece1),
@@ -52,7 +52,7 @@ throw_piece(left, Nrow, Piece, BoardIn, BoardOut):-
 			set_piece(18, Nrow, Piece1, BoardIn, Board1),
 			set_piece(19, Nrow, Piece, Board1, BoardOut))).
 
-throw_piece(_, _, _, BoardIn, BoardIn):-
+move(_, _, _, BoardIn, BoardIn):-
 	!,fail.
 %---------END THROW Direction-----------%
 
