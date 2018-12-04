@@ -1,3 +1,5 @@
+
+:- use_module(library(lists)).
 :- use_module(library(clpfd)).
 
 sudoku(Puzzle) :-
@@ -6,16 +8,18 @@ sudoku(Puzzle) :-
 	domain(Tmp, 1, Length),
 	Rows = Puzzle,
     transpose(Rows, Columns),
+    write(Rows),
+    write(Columns),
     % blocks(Rows, Blocks),
     maplist(all_distinct, Rows),
     maplist(all_distinct, Columns),
     % maplist(all_distinct, Blocks),
-    maplist([], Rows).
+    labeling([], Rows).
 
-flatten2([], []) :- !.
-flatten2([L|Ls], FlatL) :-
+flatten([], []) :- !.
+flatten([L|Ls], FlatL) :-
     !,
-    flatten2(L, NewL),
-    flatten2(Ls, NewLs),
+    flatten(L, NewL),
+    flatten(Ls, NewLs),
     append(NewL, NewLs, FlatL).
-flatten2(L, [L]).
+flatten(L, [L]).
