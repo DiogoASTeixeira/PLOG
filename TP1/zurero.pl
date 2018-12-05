@@ -4,6 +4,7 @@
 :- include('logic.pl').
 :- include('board.pl').
 :- include('AI.pl').
+:- include('server.pl').
 :- use_module(library(random)).
 
 zurero:- 
