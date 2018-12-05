@@ -4,7 +4,6 @@
 :- include('logic.pl').
 :- include('board.pl').
 :- include('AI.pl').
-:- include('server.pl').
 :- use_module(library(random)).
 
 zurero:- 
@@ -70,6 +69,10 @@ loopPvP(Player, Board):-
 			loopPvP(Player, Board))
 	%ELSE of input_direction - Invalid Direction
 	;	loopPvP(Player, Board)).
+
+
+
+
 
 loopAI(AIdifficulty, Player, Board):-
 	!,
