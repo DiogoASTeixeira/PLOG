@@ -10,7 +10,7 @@ puzzle(Puzzle):-
         [2,_,_,_]
     ].
 
-sudoku:-
+sudoku(Rows):-
     puzzle(Puzzle),
     Rows = [A,B,C,D],
     write(Puzzle),nl,
