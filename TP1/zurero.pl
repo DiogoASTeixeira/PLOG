@@ -70,10 +70,6 @@ loopPvP(Player, Board):-
 	%ELSE of input_direction - Invalid Direction
 	;	loopPvP(Player, Board)).
 
-
-
-
-
 loopAI(AIdifficulty, Player, Board):-
 	!,
 	print_board(Board),

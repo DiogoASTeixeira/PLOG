@@ -102,31 +102,11 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
-:- include('zurero.pl').
-
 
 parse_input(handshake, handshake).
-parse_input(board,Board):- create_board(Board).
-parse_input(Direction-N, N-Direction).
-parse_input(a(Direction,N), N).
+parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 
-loopPvP(Player, Board):-
-	!,
-	print_board(Board),
-	write(Player),
-	% (input_direction(Direction)->
-	% 	input_number(Input2),
-	(parse_input(a(Direction,N), Board) ->
-		player_piece(Player, Piece),
-		(move(Direction, Input2, Piece, Board, NewBoard) ->
-			(game_over(Player, NewBoard) ->
-				!,true
-			;	change_player(Player, Opponent),
-				loopPvP(Opponent, NewBoard))
-		%ELSE move - Impossible move
-		;	write('Invalid move!'),
-			nl,
-			loopPvP(Player, Board))
-	%ELSE of input_direction - Invalid Direction
-	;	loopPvP(Player, Board)).
+test(_,[],N) :- N =< 0.
+test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
+	
