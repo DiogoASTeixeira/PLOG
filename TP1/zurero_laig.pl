@@ -12,13 +12,22 @@ board(Board) :- create_board(Board).
 
 current_player(white).
 
-zurero_laig(ABoard).
+zurero_laig(Direction, Number, NewBoard):-
+	board(Board),
+	current_player(Player),
+	player_piece(Player, Piece),
+	move(Direction, Number, Piece, Board, NewBoard),
+	assert_new_board(NewBoard),
+	assert_change_player(Player),
+	print_board(NewBoard).
 
+% Assert New Board - Save the board for the next call 
 assert_new_board(NewBoard):-
 	retract((board(_Board):-_Body)),
 	assertz(board(NewBoard)).
-	
-assert_new_player(Player, NewPlayer):-
+
+% Assert Change Player - Remember the player who will play next
+assert_change_player(Player):-
 	change_player(Player, NewPlayer),
-	retract(current_player(Player)),
+	retract(current_player(_Player)),
 	assert(current_player(NewPlayer)).

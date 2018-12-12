@@ -102,9 +102,11 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:-include('zurero_laig.pl').
 
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
+parse_input(move(Direction, N), Board) :- zurero_laig(Direction, N, Board).
 parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
