@@ -1,3 +1,5 @@
+:- use_module(library(clpfd)).
+
 /* my_nth -> nth1 but works with elements being other lists */
 my_nth(1, [X|_T], X).
 my_nth(N, [_H|T], X):-
@@ -26,29 +28,8 @@ create_global_list_aux(N, Length, [N-Length|T]):-
     NN #= N+1,
     create_global_list_aux(NN, Length, T).
 
-/* create_list_of_lists -> creates a matrix */ 
-create_list_of_lists(N, List) :-
-    create_list_of_lists_aux(1,N, List) .
-create_list_of_lists_aux(N, N, [H|[]]):-
-    length(H,N).
-create_list_of_lists_aux(I, N, [H|T]):-
-	length(H, N),
-    I #< N,
-    II #= I + 1,
-    create_list_of_lists_aux(II, N, T).
-
 /* label_all -> calls label to all lists in given list */
 label_all([]).
 label_all([H|T]):-
     labeling([],H),
     label_all(T).
-
-/* flat -> turns list of lists into a single list*/
-
-flat([], []) :- !.
-flat([L|Ls], FlatL) :-
-    !,
-    flat(L, NewL),
-    flat(Ls, NewLs),
-    append(NewL, NewLs, FlatL).
-flat(L, [L]).

@@ -19,41 +19,34 @@ map_sudoku(p1, Map) :-
     ].
 
 
-test:-
-    flat([2,[1,[a,b,c],3],[4]], A),
-    write(A).
-
+test(AreaValues):-
+    append([[1,2,3], [4,5,6]],AreaValues).
 sudoku(Puzzle, Map):-
     puzzle(p1,Puzzle),
     map_sudoku(p1, Map),
     length(Puzzle, Length),
+    Lsquared is Length*Length,
+    length(AreaValues, Lsquared),
+
+    append(Map, FlatMap),
+    append(Puzzle, FlatPuzzle),
+
+    domain(FlatPuzzle, 1, Length),
 
     create_global_list(Length, GlobalList),
-    flat(Map, FlatMap),
     global_cardinality(FlatMap, GlobalList),
-
-    create_list_of_lists(Length, AreaValues),
-
-    flat(Puzzle, Tmp1),
-    domain(Tmp1, 1, Length),
-    flat(AreaValues, Tmp2),
-    domain(Tmp2, 1, Length),
-    global_cardinality(Tmp2, GlobalList),
 
     adjacent(Map, Length),
     transpose(Puzzle, Columns),
 
-
-    % blocks(Puzzle, Blocks),
-    maplist(all_distinct, AreaValues),
+    sync_puzzle_map(Length, FlatPuzzle, FlatMap, AreaValues),
+    all_distinct(AreaValues),
     maplist(all_distinct, Puzzle),
     maplist(all_distinct, Columns),
 
-    separate_values_in_map(Puzzle, Map, AreaValues),
+    append(FlatPuzzle, FlatMap, PandM),
 
-    % label_all(AreaValues),
-    label_all(Puzzle),
-    label_all(Map).
+    labeling([],PandM).
 
 adjacent(Map, Length) :-
     adj_aux_x(1, Map, Length).
@@ -94,3 +87,8 @@ check_adjacency(X, Y, Map, Value, Length) :-
     YY #= Y + 1,
     YY #=< Length,
     get_member(X, YY, Map, Value).
+
+sync_puzzle_map(_, [], [], []).
+sync_puzzle_map(N, [PH|PT], [MH|MT], [AH|AT]):-
+    N*(MH-1) + PH mod N #= AH,
+    sync_puzzle_map(N, PT, MT, AT).
