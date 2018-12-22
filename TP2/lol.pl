@@ -2,7 +2,9 @@
 :- use_module(library(lists)).
 :- use_module(library(clpfd)).
 :- include('auxiliary.pl').
-
+/*
+    Puzzle templates
+*/
 puzzle(p1,Puzzle):-
     Puzzle = [
         [_,_,4,1],
@@ -10,6 +12,37 @@ puzzle(p1,Puzzle):-
         [_,_,_,_],
         [2,_,_,_]
     ].
+puzzle(p2, Puzzle):-
+    Puzzle = [
+        [_,2,_,_],
+        [_,1,4,_],
+        [_,_,3,_],
+        [_,_,_,_]
+    ].
+puzzle(p3, Puzzle):-
+    Puzzle = [
+        [_,_,_,_,_,_,5,_],
+        [_,8,_,1,7,_,_,4],
+        [6,_,_,4,_,_,_,_],
+        [_,_,_,_,4,_,6,3],
+        [_,_,_,_,_,8,_,7],
+        [_,_,4,_,6,_,_,_],
+        [_,_,5,_,_,6,_,2],
+        [2,_,_,_,_,_,3,_]
+    ].
+puzzle(p4, Puzzle):-
+    Puzzle = [
+        [_,_,_,1,_,6],
+        [6,_,4,_,_,_],
+        [1,_,2,_,_,_],
+        [_,_,_,5,_,1],
+        [_,_,_,6,_,3],
+        [5,_,6,_,_,_]
+    ].
+
+/* 
+    Map Templates
+*/
 map_sudoku(p1, Map) :-
     Map = [
         [_,_,_,_],
@@ -17,13 +50,45 @@ map_sudoku(p1, Map) :-
         [_,1,_,_],
         [_,_,_,_]
     ].
-
+map_sudoku(p2, Map):-
+    Map = [
+        [1,1,_,_],
+        [1,1,_,_],
+        [_,_,_,_],
+        [_,_,_,_]
+    ].
+map_sudoku(p3, Map):-
+    Map = [
+        [1,1,1,1,_,_,_,_],
+        [1,1,1,1,_,_,_,_],
+        [_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_],
+        [_,_,_,_,2,2,2,2],
+        [_,_,_,_,2,2,2,2],
+        [_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_]
+    ].
+map_sudoku(p4, Map):-
+    Map = [
+        [_,_,_,_,_,_],
+        [1,1,1,_,_,_],
+        [1,1,1,_,_,_],
+        [_,_,_,_,_,_],
+        [_,_,_,_,_,_],
+        [_,_,_,_,_,_]
+    ].
 
 test(AreaValues):-
     append([[1,2,3], [4,5,6]],AreaValues).
-sudoku(Puzzle, Map):-
-    puzzle(p1,Puzzle),
-    map_sudoku(p1, Map),
+sudoku(Option,Puzzle, Map):-
+    puzzle(Option,Puzzle),
+    map_sudoku(Option, Map),
+
+    /*
+    Start Timer
+    */
+    statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
+
     length(Puzzle, Length),
     Lsquared is Length*Length,
     length(AreaValues, Lsquared),
@@ -46,7 +111,9 @@ sudoku(Puzzle, Map):-
 
     append(FlatPuzzle, FlatMap, PandM),
 
-    labeling([],PandM).
+    labeling([],PandM),
+    statistics(walltime, [_NewTimeSinceStart | [ExecutionTime]]),
+    write('Execution took '), write(ExecutionTime), write(' ms.'), nl.
 
 adjacent(Map, Length) :-
     adj_aux_x(1, Map, Length).
